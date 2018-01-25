@@ -23,15 +23,20 @@ storage.fetchAll = function(schema) {
 
   return new Promise((resolve, reject) => {
     if(!schema) return reject(new Error('Cannot fetch all items; Schema required'));
+    if(!memory[schema]) return reject(new Error('Cannot find Schema'));
 
-    return resolve(memory[schema]);
+    let ids= Object.keys(memory[schema]);
+
+    return resolve(ids);
   });
 };
 
 storage.update = function(schema, item) {
   debug('Updated the thing');
+
   return new Promise((resolve, reject) => {
     if(!schema || !item || !memory[schema][item._id]) return reject(new Error('Cannot update item; please provide schema and item'));
+
     memory[schema][item._id] = item;
     return resolve(item);
   });
@@ -41,8 +46,9 @@ storage.delete = function(schema, _id) {
   debug('Deleted the thing');
 
   return new Promise((resolve, reject) => {
-    if(!schema || _id) return reject(new Error('Cannot delete item without an item ID  or schema provided'));
+    if(!schema || _id) return reject(new Error('Cannot delete item without an item ID or schema provided'));
     delete memory[schema][_id];
+
     return resolve(_id);
   });
 };
