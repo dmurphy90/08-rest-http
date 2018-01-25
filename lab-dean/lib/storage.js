@@ -31,7 +31,7 @@ storage.fetchAll = function(schema) {
 storage.update = function(schema, item) {
   debug('Updated the thing');
   return new Promise((resolve, reject) => {
-    if(!schema || item || !memory[schema][item._id]) return reject(new Error('Cannot update item; please provide schema and item'));
+    if(!schema || !item || !memory[schema][item._id]) return reject(new Error('Cannot update item; please provide schema and item'));
     memory[schema][item._id] = item;
     return resolve(item);
   });
