@@ -65,7 +65,7 @@ module.exports = function(router) {
           res.write(JSON.stringify(storedNote));
           res.end();
           return;
-        })
+        });
     } catch(err) {
       debug('There was a bad request: ${err}');
       res.writeHead(400, {'Content-Type': 'text/plain'});
