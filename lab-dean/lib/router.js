@@ -13,7 +13,9 @@ const Router = module.exports = function() {
   };
 };
 
+
 Router.prototype.get = function(endpoint, callback) {
+  // debug(`Router: GET ${endpoint} mounted`)
   this.routes.GET[endpoint] = callback;
 };
 
@@ -32,7 +34,7 @@ Router.prototype.delete = function(endpoint, callback) {
 Router.prototype.route = function() {
   return (req, res) => {
     Promise.all([
-      urlParser(req), 
+      urlParser(req),
       bodyParser(req),
     ])
       .then(() => {

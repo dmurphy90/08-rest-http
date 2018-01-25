@@ -16,16 +16,28 @@ storage.create = function(schema, item) {
     memory[schema][item._id] = item;
     return resolve(memory[schema][item._id]);
   });
-}; 
+};
 
-storage.fetchAll = function() {
+storage.fetchAll = function(schema) {
+  debug('Fetch all the things');
 
+  return new Promise((resolve, reject) => {
+    if(!schema) return reject(new Error('Cannot fetch all items; Schema required'));
+
+    return(memory[schema]);
+  });
 };
 
 storage.update = function() {
 
 };
 
-storage.delete = function() {
+storage.delete = function(schema, item) {
+  debug('Deleted the thing');
 
+  return new Promise((resolve, reject) => {
+    if(!item) return reject(new Error('Cannot delete item without an item ID provided'));
+    delete memory[schema][item._id];
+    return resolve();
+  });
 };
